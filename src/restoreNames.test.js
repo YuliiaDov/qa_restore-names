@@ -3,61 +3,96 @@
 describe('restoreNames', () => {
   const { restoreNames } = require('./restoreNames');
 
-  it(`'firstName' is 'undefined'`, () => {
-    const user = {
-      firstName: undefined,
-      lastName: 'Holy',
-      fullName: 'Jack Holy',
-    };
-
-    restoreNames([user]);
-
-    expect(user).toMatchObject({
-      firstName: 'Jack',
-      lastName: 'Holy',
-      fullName: 'Jack Holy',
-    });
-  });
-
-  it(`'firstName' was deleted`, () => {
-    const user = {
-      lastName: 'Adamson',
-      fullName: 'Mike Adamson',
-    };
-
-    restoreNames([user]);
-
-    expect(user).toMatchObject({
-      firstName: 'Mike',
-      lastName: 'Adamson',
-      fullName: 'Mike Adamson',
-    });
-  });
-
-  it(`valid user`, () => {
-    const user = {
-      firstName: 'Mike',
-      lastName: 'Adamson',
-      fullName: 'Mike Adamson',
-    };
-
-    restoreNames([user]);
-
-    expect(user).toMatchObject({
-      firstName: 'Mike',
-      lastName: 'Adamson',
-      fullName: 'Mike Adamson',
-    });
+  it(`should be declared`, () => {
+    expect(restoreNames).toBeDefined();
   });
 
   it(`should return 'undefined'`, () => {
-    const user = {
-      firstName: 'Mike',
-      lastName: 'Adamson',
-      fullName: 'Mike Adamson',
-    };
+    const result = restoreNames([]);
 
-    expect(restoreNames([user])).toBeUndefined();
+    expect(result).toBe(undefined);
+  });
+
+  it(`should not change correct users`, () => {
+    const data = [{
+      firstName: 'Jack',
+      lastName: 'Holy',
+      fullName: 'Jack Holy',
+    }];
+
+    restoreNames(data);
+
+    expect(data).toEqual([{
+      firstName: 'Jack',
+      lastName: 'Holy',
+      fullName: 'Jack Holy',
+    }]);
+  });
+
+  it(`should add firstName field where it is missing`, () => {
+    const data = [{
+      lastName: 'Holy',
+      fullName: 'Jack Holy',
+    }];
+
+    restoreNames(data);
+
+    expect(data).toEqual([{
+      firstName: 'Jack',
+      lastName: 'Holy',
+      fullName: 'Jack Holy',
+    }]);
+  });
+
+  it(`should add firstName field where it is value is 'undefined'`, () => {
+    const data = [{
+      lastName: 'Adams',
+      fullName: 'Mike Adams',
+    }];
+
+    restoreNames(data);
+
+    expect(data).toEqual([{
+      firstName: 'Mike',
+      lastName: 'Adams',
+      fullName: 'Mike Adams',
+    }]);
+  });
+
+  it(`should add firstName field where it is value is 'undefined'
+      or missing multiple times`, () => {
+    const data = [{
+      lastName: 'Holy',
+      fullName: 'Jack Holy',
+    },
+    {
+      firstName: 'Mike',
+      lastName: 'Adams',
+      fullName: 'Mike Adams',
+    },
+    {
+      firstName: undefined,
+      lastName: 'Stark',
+      fullName: 'Tony Stark',
+    }];
+
+    restoreNames(data);
+
+    expect(data).toEqual([{
+      firstName: 'Jack',
+      lastName: 'Holy',
+      fullName: 'Jack Holy',
+    },
+    {
+      firstName: 'Mike',
+      lastName: 'Adams',
+      fullName: 'Mike Adams',
+    },
+    {
+      firstName: 'Tony',
+      lastName: 'Stark',
+      fullName: 'Tony Stark',
+    }]);
   });
 });
 
