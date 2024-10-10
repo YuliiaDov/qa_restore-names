@@ -21,40 +21,40 @@ describe('restoreNames', () => {
 
   it(`'firstName' was deleted`, () => {
     const user = {
-      lastName: 'Adams',
-      fullName: 'Mike Adams',
+      lastName: 'Adamson',
+      fullName: 'Mike Adamson',
     };
 
     restoreNames([user]);
 
     expect(user).toMatchObject({
       firstName: 'Mike',
-      lastName: 'Adams',
-      fullName: 'Mike Adams',
+      lastName: 'Adamson',
+      fullName: 'Mike Adamson',
     });
   });
 
   it(`valid user`, () => {
     const user = {
       firstName: 'Mike',
-      lastName: 'Adams',
-      fullName: 'Mike Adams',
+      lastName: 'Adamson',
+      fullName: 'Mike Adamson',
     };
 
     restoreNames([user]);
 
     expect(user).toMatchObject({
       firstName: 'Mike',
-      lastName: 'Adams',
-      fullName: 'Mike Adams',
+      lastName: 'Adamson',
+      fullName: 'Mike Adamson',
     });
   });
 
   it(`should return 'undefined'`, () => {
     const user = {
       firstName: 'Mike',
-      lastName: 'Adams',
-      fullName: 'Mike Adams',
+      lastName: 'Adamson',
+      fullName: 'Mike Adamson',
     };
 
     expect(restoreNames([user])).toBeUndefined();
